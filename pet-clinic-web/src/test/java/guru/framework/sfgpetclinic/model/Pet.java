@@ -4,9 +4,9 @@ import java.time.LocalDateTime;
 
 public class Pet {
 
-    private PetType petType ;
-    private Owner owner ;
-    private LocalDateTime birthDate ;
+    private PetType petType;
+    private Owner owner;
+    private LocalDateTime birthDate;
 
     public PetType getPetType() {
         return petType;

@@ -2,7 +2,7 @@ package guru.framework.sfgpetclinic.model;
 
 public class PetType {
 
-    private String name ;
+    private String name;
 
     public String getName() {
         return name;
