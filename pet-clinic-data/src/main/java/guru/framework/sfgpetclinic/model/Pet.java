@@ -2,23 +2,15 @@ package guru.framework.sfgpetclinic.model;
 
 import java.time.LocalDateTime;
 
-public class Pet {
+public class Pet extends BaseEntity{
 
-    private Long id;
+
     private PetType petType;
     private Owner owner;
     private LocalDateTime birthDate;
 
     public PetType getPetType() {
         return petType;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public void setPetType(PetType petType) {
