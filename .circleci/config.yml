@@ -11,7 +11,9 @@ jobs:
           command: find . -name 'pom.xml' | sort | xargs cat > /tmp/maven_cache_seed
       - restore_cache:
           key: maven-{{ checksum "/tmp/maven_cache_seed" }}
-      - run: mvn install -DskipTests
+      - run:
+          name: Install DskipTests
+          command: mvn install -DskipTests
       - run:
           name: Install Dependencies
           command: mvn dependency:go-offline --settings 'pom.xml'
@@ -27,7 +29,7 @@ jobs:
 workflows:
   maven_test:
     jobs:
-      - maven/install
+      - maven/test
   version: 2
 
 # Original config.yml file:
