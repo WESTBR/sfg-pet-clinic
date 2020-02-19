@@ -2,12 +2,14 @@ package guru.springframework.sfgpetclinic.bootstrap;
 
 import guru.springframework.sfgpetclinic.model.*;
 import guru.springframework.sfgpetclinic.services.SpecialtyService;
+import guru.springframework.sfgpetclinic.services.VisitService;
 import guru.springframework.sfgpetclinic.services.map.OwnerMapService;
 import guru.springframework.sfgpetclinic.services.map.PetTypeMapService;
 import guru.springframework.sfgpetclinic.services.map.VetMapService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Component
@@ -17,12 +19,14 @@ public class DataLoader implements CommandLineRunner {
     private final VetMapService vetMapService;
     private final PetTypeMapService petTypeMapService;
     private final SpecialtyService specialtyService ;
+    private final VisitService visitService ;
 
-    public DataLoader(OwnerMapService ownerMapService, VetMapService vetMapService, PetTypeMapService petTypeMapService, SpecialtyService specialtyService) {
+    public DataLoader(OwnerMapService ownerMapService, VetMapService vetMapService, PetTypeMapService petTypeMapService, SpecialtyService specialtyService, VisitService visitService) {
         this.ownerMapService = ownerMapService;
         this.vetMapService = vetMapService;
         this.petTypeMapService = petTypeMapService;
         this.specialtyService = specialtyService;
+        this.visitService = visitService;
     }
 
     @Override
@@ -74,6 +78,14 @@ public class DataLoader implements CommandLineRunner {
         digiCat.setName("Just Cat");
         owner2.getPets().add(digiCat);
         ownerMapService.save(owner2);
+
+        Visit catVisit = new Visit();
+        catVisit.setPet(digiCat);
+        catVisit.setDate(LocalDate.now());
+        catVisit.setDescription("Sneezy kitty");
+
+        visitService.save(catVisit);
+        System.out.println("Loaded visits...");
 
         System.out.println("Loaded Owners...");
 
