@@ -1,11 +1,7 @@
 package guru.springframework.sfgpetclinic.bootstrap;
 
 import guru.springframework.sfgpetclinic.model.*;
-import guru.springframework.sfgpetclinic.services.SpecialtyService;
-import guru.springframework.sfgpetclinic.services.VisitService;
-import guru.springframework.sfgpetclinic.services.map.OwnerMapService;
-import guru.springframework.sfgpetclinic.services.map.PetTypeMapService;
-import guru.springframework.sfgpetclinic.services.map.VetMapService;
+import guru.springframework.sfgpetclinic.services.*;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
@@ -15,23 +11,23 @@ import java.time.LocalDateTime;
 @Component
 public class DataLoader implements CommandLineRunner {
 
-    private final OwnerMapService ownerMapService;
-    private final VetMapService vetMapService;
-    private final PetTypeMapService petTypeMapService;
+    private final OwnerService ownerService;
+    private final VetService vetService;
+    private final PetTypeService petTypeService;
     private final SpecialtyService specialtyService ;
     private final VisitService visitService ;
 
-    public DataLoader(OwnerMapService ownerMapService, VetMapService vetMapService, PetTypeMapService petTypeMapService, SpecialtyService specialtyService, VisitService visitService) {
-        this.ownerMapService = ownerMapService;
-        this.vetMapService = vetMapService;
-        this.petTypeMapService = petTypeMapService;
+    public DataLoader(OwnerService ownerService, VetService vetService, PetTypeService petTypeService, SpecialtyService specialtyService, VisitService visitService) {
+        this.ownerService = ownerService;
+        this.vetService = vetService;
+        this.petTypeService = petTypeService;
         this.specialtyService = specialtyService;
         this.visitService = visitService;
     }
 
     @Override
     public void run(String... args) throws Exception {
-        int count = petTypeMapService.findAll().size();
+        int count = petTypeService.findAll().size();
         if(count==0){
             loadData();
         }
@@ -40,11 +36,11 @@ public class DataLoader implements CommandLineRunner {
     private void loadData() {
         PetType dog = new PetType();
         dog.setName("dog");
-        PetType savedDogPetType = petTypeMapService.save(dog);
+        PetType savedDogPetType = petTypeService.save(dog);
 
         PetType cat = new PetType();
         cat.setName("cat");
-        PetType savedCatPetType = petTypeMapService.save(cat);
+        PetType savedCatPetType = petTypeService.save(cat);
 
         System.out.println("Loaded PetType...");
 
@@ -62,7 +58,7 @@ public class DataLoader implements CommandLineRunner {
         mikeDog.setName("Rosco");
 
         owner1.getPets().add(mikeDog);
-        ownerMapService.save(owner1);
+        ownerService.save(owner1);
 
         Owner owner2 = new Owner();
         owner2.setFirstName("Fiona");
@@ -77,7 +73,7 @@ public class DataLoader implements CommandLineRunner {
         digiCat.setBirthDate(LocalDateTime.now());
         digiCat.setName("Just Cat");
         owner2.getPets().add(digiCat);
-        ownerMapService.save(owner2);
+        ownerService.save(owner2);
 
         Visit catVisit = new Visit();
         catVisit.setPet(digiCat);
@@ -107,14 +103,14 @@ public class DataLoader implements CommandLineRunner {
         vet1.getSpecialties().add(savedDentistry);
         vet1.getSpecialties().add(savedSurgery);
 
-        vetMapService.save(vet1);
+        vetService.save(vet1);
 
         Vet vet2 = new Vet();
         vet2.setLastName("Jessie");
         vet2.setFirstName("Porter");
         vet2.getSpecialties().add(savedRadiology);
 
-        vetMapService.save(vet2);
+        vetService.save(vet2);
 
         System.out.println("Loaded Vets...");
     }
