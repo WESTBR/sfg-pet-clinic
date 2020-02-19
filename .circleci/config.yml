@@ -12,6 +12,9 @@ jobs:
       - restore_cache:
           key: maven-{{ checksum "/tmp/maven_cache_seed" }}
       - run:
+          name: Install DskipTests
+          command:  mvn install -DskipTests
+      - run:
           name: Install Dependencies
           command: mvn dependency:go-offline --settings 'pom.xml'
       - run:
